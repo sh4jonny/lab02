@@ -5,12 +5,7 @@
   user: vagrant
   become: yes
   vars:
-    # - mysql_root_password: "123QaZxSw123"
-    # - domain: "example.com"
-    # - download_url: "http://wordpress.org/latest.tar.gz"
-    # - wpdirectory: "/var/www"
-    # - db_name: "wordpress"
-    # - db_user: "wordpress"
-    # - db_password: "wordpress"
+    jenkins_hostname: server-03
   roles:
-#    - { role: common }
+    - { role: sw-apt-mirror }
+    - { role: jenkins }

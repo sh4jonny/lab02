@@ -1,0 +1,8 @@
+# Debian
+########
+
+#debian_apt_mirror: 'httpredir.debian.org'
+debian_apt_mirror: 'ftp.by.debian.org'
+
+# For EOL.
+#debian_apt_mirror: 'archive.debian.org'
