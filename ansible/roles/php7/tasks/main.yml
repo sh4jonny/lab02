@@ -1,0 +1,19 @@
+- name: install php7.0
+  apt: pkg={{ item }}
+  with_items:
+    - php7.0
+    - php7.0-cgi
+    - php7.0-fpm
+    - php7.0-mcrypt
+    - php7.0-mysql
+    - php7.0-gd
+    - php7.0-curl
+    - php7.0-xmlrpc
+    - unzip
+
+- name: change listen socket
+  lineinfile:
+    dest: '/etc/php/7.0/fpm/pool.d/www.conf'
+    insertafter: 'listen = 127.0.0.1:9000'
+    line: 'listen = /var/run/fpm.socket'
+  notify: restart php7.0-fpm

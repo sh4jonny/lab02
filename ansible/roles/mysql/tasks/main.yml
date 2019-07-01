@@ -1,0 +1,26 @@
+- name: Install MySQL server
+  apt:
+    pkg: "{{ item }}"
+    update_cache: true
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+
+- name: Change root password (fail is not a problem)
+  mysql_user:
+    name: root
+    password: "{{ mysql_root_password}}"
+  ignore_errors: yes
+
+- name: bind mysql remote address
+  ini_file: dest=/etc/mysql/mariadb.conf.d/50-server.cnf
+            section=mysqld
+            option=bind-address
+            value="0.0.0.0"
+  # with_items: mysql.bind
+  # tags:
+  # - mysql
+  # - mysql-configure
+  notify:
+  - restart mysql

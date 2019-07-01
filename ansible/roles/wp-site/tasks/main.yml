@@ -1,0 +1,74 @@
+- name: download WordPress
+  get_url:
+    url: "{{ download_url }}"
+    dest: "/tmp/latest.tar.gz"
+
+- name: creating directory for WordPress
+  file:
+    path: "{{ wpdirectory }}"
+    state: "directory"
+    owner: "www-data"
+    group: "www-data"
+
+- name: unpack WordPress installation
+  shell: "tar xvfz /tmp/latest.tar.gz -C {{ wpdirectory }} && chown -R www-data:www-data {{ wpdirectory }}"
+
+- name: copy distr example config
+  command: cp /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
+
+- name: update WordPress config file
+  become: true
+  lineinfile:
+    dest=/var/www/wordpress/wp-config.php
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - {'regexp': "define\\( 'DB_NAME', '(.)+' \\);", 'line': "define('DB_NAME', '{{db_name}}');"}
+    - {'regexp': "define\\( 'DB_USER', '(.)+' \\);", 'line': "define('DB_USER', '{{db_user}}');"}
+    - {'regexp': "define\\( 'DB_PASSWORD', '(.)+' \\);", 'line': "define('DB_PASSWORD', '{{db_password}}');"}
+    - {'regexp': "define\\( 'DB_HOST', '(.)+' \\);", 'line': "define('DB_HOST', '{{db_host}}');"}
+
+# - name: Download wp-cli
+#   get_url:
+#     url="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+#     dest="/var/bin/wp"
+#     force: true
+#     owner: root
+#     group: root
+#     mode: 0755
+#
+
+- name: Download Woocommerce
+  get_url:
+    url=https://github.com/woocommerce/woocommerce/archive/3.6.4.tar.gz
+    dest=/tmp/woocommerce.tar.gz
+    validate_certs=no
+  sudo: yes
+
+- name: Extract Woocommerce
+  unarchive:
+    src=/tmp/woocommerce.tar.gz
+    dest=/var/www/wordpress/wp-content/plugins
+    copy=no
+    follow=true
+  sudo: yes
+
+- name: Download storefront Theme
+  get_url:
+    url=https://downloads.wordpress.org/theme/storefront.2.5.0.zip
+    dest=/tmp/storefront.zip
+    validate_certs=no
+  sudo: yes
+
+- name: Extract storefront Theme
+  unarchive:
+    src=/tmp/storefront.zip
+    dest=/var/www/wordpress/wp-content/themes
+    copy=no
+    follow=true
+  sudo: yes
+
+# - name: Activate WooCommerce
+#   command: wp plugin activate woocommerce-3.6.4 --path=/var/www/wordpress --allow-root
+#   args:
+#     chdir: /var/www/wordpress/

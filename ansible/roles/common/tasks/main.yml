@@ -1,0 +1,2 @@
+- name: Basic system update and setup software
+  import_tasks: install.yml
