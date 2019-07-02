@@ -15,7 +15,10 @@ Server-03
  - Nginx  
  - Debian
 
-Импорт темплейта проекта из templates/test-01.xml
+Импорт темплейта проекта из templates/test-01.xml  
+
+jenkins_admin_username: admin  
+jenkins_admin_password: admin
 
 ---------------------------------------------  
 

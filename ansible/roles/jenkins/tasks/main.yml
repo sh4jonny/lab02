@@ -110,6 +110,6 @@
 
 - name: create jenkins jobs from xml
   sudo: yes
-  shell: "java -jar {{ jenkins_jar_location }} -s http://localhost:8080 -auth {{jenkins_admin_username}}:{{jenkins_admin_password}} create-job test-01 < {{ jenkins_home }}/userContent/test-01.xml"
+  shell: "java -jar {{ jenkins_jar_location }} -s http://localhost:8080 -auth {{jenkins_admin_username}}:{{jenkins_admin_password}} create-job {{ item }} < {{ jenkins_home }}/userContent/{{ item }}.xml"
   with_items:
     - test-01
