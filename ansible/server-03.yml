@@ -1,5 +1,5 @@
 #---
-# This playbook would deploy server-01.
+# This playbook would deploy server-03.
 
 - hosts: server-03
   user: vagrant
@@ -8,4 +8,5 @@
     jenkins_hostname: server-03
   roles:
     - { role: sw-apt-mirror }
+    - { role: nginx-jenk }
     - { role: jenkins }

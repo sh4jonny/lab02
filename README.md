@@ -1,9 +1,26 @@
 # ReadMe First !!!
-Магазин на минималках. Без рюшечек, блекджека и ...  
 
 vagrant > v2.2.0 required  
 ***vagrant-hostmanager*** required  
 vagrant plugin install vagrant-hostmanager
+
+# LAB-02
+### Ansible Jenkins Deploy  
+
+vagrant up server-03
+
+Server-03
+Внутри:
+ - Jenkins
+ - Nginx  
+ - Debian
+
+Импорт темплейта проекта из templates/test-01.xml
+
+---------------------------------------------  
+
+# LAB-01  
+### Магазин на минималках. Без рюшечек, блекджека и ...  
 
 Внутри:
  - WordPress

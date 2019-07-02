@@ -1,0 +1,19 @@
+- name: Install nginx
+  action: apt pkg=nginx state=installed update_cache=true
+
+- name: Disable default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: install nginx configuration
+  template:
+    src: jenkins.conf
+    dest: /etc/nginx/sites-available/jenkins.conf
+
+- name: activate site configuration
+  file:
+    src: '/etc/nginx/sites-available/jenkins.conf'
+    dest: '/etc/nginx/sites-enabled/jenkins.conf'
+    state: 'link'
+  notify: restart nginx

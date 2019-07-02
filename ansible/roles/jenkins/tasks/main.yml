@@ -102,3 +102,14 @@
 
 - name: Update Jenkins and install configured plugins.
   include: plugins.yml
+
+- name: add job template.
+  template:
+    src: test-01.xml
+    dest: "{{ jenkins_home }}/userContent/test-01.xml"
+
+- name: create jenkins jobs from xml
+  sudo: yes
+  shell: "java -jar {{ jenkins_jar_location }} -s http://localhost:8080 create-job {{ item }} < {{ jenkins_home }}/userContent/{{ item }}.xml"
+  with_items:
+    - test-01

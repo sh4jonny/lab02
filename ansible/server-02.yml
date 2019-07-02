@@ -1,5 +1,5 @@
 #---
-# This playbook would deploy server-01.
+# This playbook would deploy server-02.
 
 - hosts: server-02
   user: vagrant
